@@ -24,7 +24,7 @@ def access_sheet(sheet_name):
     scopes = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
     #credentials = ServiceAccountCredentials.from_json_keyfile_name('ama-chatbot-8515b4750179.json', scope)
-    credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
+    credentials = ServiceAccountCredentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
     gc = gspread.authorize(credentials)
     sheet = gc.open('ama-chatbot-db').worksheet(sheet_name)
     return sheet

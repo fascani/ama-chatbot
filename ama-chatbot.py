@@ -16,6 +16,7 @@ import numpy as np
 from transformers import GPT2TokenizerFast
 from sentence_transformers import SentenceTransformer
 import datetime
+from streamlit_chat import message
 
 # Read database on Google sheet
 ###############################
@@ -332,6 +333,41 @@ def ama_chatbot(query, df, method):
 
 # Streamlit app
 ###############
+
+# (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
+
 st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
 st.title('Ask Me Anything! A chatbot by and about Francois Ascani')
+
+# Prepare engine
+method = 'openai'
+df = get_data()
+
+# Storing the chat
+if 'generated' not in st.session_state:
+    st.session_state['generated'] = []
+
+if 'past' not in st.session_state:
+    st.session_state['past'] = []
+    
+ # Get user's input   
+ def get_text():
+    input_text = st.text_input("You: ","Hello, how are you?", key="input")
+    return input_text
+
+user_input = get_text()
+
+# Get the answer
+if user_input:
+    output = ama_chatbot(user_input, df, method)
+    # store the output 
+    st.session_state.past.append(user_input)
+    st.session_state.generated.append(output)
+    
+# Display the chat    
+if st.session_state['generated']:
+    
+    for i in range(len(st.session_state['generated'])-1, -1, -1):
+        message(st.session_state["generated"][i], key=str(i))
+        message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
 

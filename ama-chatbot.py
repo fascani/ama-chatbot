@@ -329,3 +329,7 @@ def ama_chatbot(query, df, method):
     
     return answer, prompt
 
+# Streamlit app
+###############
+st.set_page_config(page_title="Brainstorming Buddy")
+

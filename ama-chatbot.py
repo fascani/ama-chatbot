@@ -17,16 +17,6 @@ from transformers import GPT2TokenizerFast
 from sentence_transformers import SentenceTransformer
 import datetime
 
-# To do
-# Use @st.cache_resource to cache ML and databases
-# Remove the OpenAI API key -- put it in secrets.toml?
-
-# Email to use to share the Google sheet database with the service account
-# ama-chatbot-servacct@ama-chatbot.iam.gserviceaccount.com
-
-# GCP
-# See https://console.cloud.google.com/iam-admin/serviceaccounts/details/100790866393509543832/keys?project=ama-chatbot&supportedpurview=project
-
 # Read database on Google sheet
 ###############################
 def access_sheet(sheet_name):
@@ -81,7 +71,7 @@ def record_embeddings(df):
 ######################################################
 
 # Set the OpenAI API key
-openai.api_key = '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'
+openai.api_key = st.secrets["openai_api_key"]
 
 def get_embeddings(text, method):
     '''

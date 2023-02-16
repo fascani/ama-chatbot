@@ -10,7 +10,8 @@ import os
 import gspread
 import streamlit as st
 import pandas as pd
-from oauth2client.service_account import ServiceAccountCredentials
+#from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2 import service_account
 import openai
 import numpy as np
 from transformers import GPT2TokenizerFast
@@ -21,10 +22,18 @@ from streamlit_chat import message
 # Read database on Google sheet
 ###############################
 def access_sheet(sheet_name):
-    scopes = ['https://spreadsheets.google.com/feeds',
-             'https://www.googleapis.com/auth/drive']
+    '''
+    Access the Google's spreadsheet. 
+    
+    See https://docs.streamlit.io/knowledge-base/tutorials/databases/private-gsheet
+    '''
+    # From local computer
+    #scopes = ['https://spreadsheets.google.com/feeds',
+    #         'https://www.googleapis.com/auth/drive']
     #credentials = ServiceAccountCredentials.from_json_keyfile_name('ama-chatbot-8515b4750179.json', scope)
-    credentials = ServiceAccountCredentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
+    # From streamlit
+    credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"],
+                                                                        scopes=["https://www.googleapis.com/auth/spreadsheets",])
     gc = gspread.authorize(credentials)
     sheet = gc.open('ama-chatbot-db').worksheet(sheet_name)
     return sheet

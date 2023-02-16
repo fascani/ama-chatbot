@@ -332,5 +332,6 @@ def ama_chatbot(query, df, method):
 
 # Streamlit app
 ###############
-st.set_page_config(page_title="Brainstorming Buddy")
+st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
+st.title('Ask Me Anything! A chatbot by and about Francois Ascani')
 

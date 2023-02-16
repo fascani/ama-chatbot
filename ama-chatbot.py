@@ -20,9 +20,10 @@ import datetime
 # Read database on Google sheet
 ###############################
 def access_sheet(sheet_name):
-    scope = ['https://spreadsheets.google.com/feeds',
+    scopes = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('ama-chatbot-8515b4750179.json', scope)
+    #credentials = ServiceAccountCredentials.from_json_keyfile_name('ama-chatbot-8515b4750179.json', scope)
+    credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
     gc = gspread.authorize(credentials)
     sheet = gc.open('ama-chatbot-db').worksheet(sheet_name)
     return sheet

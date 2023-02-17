@@ -364,7 +364,8 @@ if 'past' not in st.session_state:
     
 # Get user's input   
 def get_text():
-    input_text = st.text_input("You: ","Hello, how are you?", key="input")
+    hello_message = "Hello, how are you?"
+    input_text = st.text_input("You: ", hello_message, key="input")
     return input_text
 
 user_input = get_text()
@@ -375,8 +376,9 @@ if user_input:
     # Store the output 
     st.session_state.past.append(user_input)
     st.session_state.generated.append(answer)
-    # Record the interaction
-    record_question_answer(user_input, answer)
+    # Record the interaction if not the hello message
+    if user_input != hello_message:
+        record_question_answer(user_input, answer)
     
 # Display the chat    
 if st.session_state['generated']:

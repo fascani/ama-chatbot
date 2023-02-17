@@ -348,7 +348,7 @@ def ama_chatbot(query, df, method):
 st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
 st.title('Ask Me Anything! A chatbot by and about Francois Ascani')
 st.markdown('Aloha! Here is a chatbot I built for you to ask questions about my professional journey. Like any other chatbot, \nit might hallucinate but \
-I kept its "freedom of speech" (aka temperature) pretty low so, hopefully, it does not hallucinate too much :). If in doubt, check my CV. Have fun!')
+I kept its "freedom of speech" (aka temperature) pretty low so, hopefully, it does not hallucinate too much \U0001f600. If in doubt, check my CV. Have fun!')
 
 # Prepare engine
 method = 'openai'
@@ -382,5 +382,5 @@ if st.session_state['generated']:
     
     for i in range(len(st.session_state['generated'])-1, -1, -1):
         message(st.session_state["generated"][i], key=str(i), avatar_style="bottts")
-        message(st.session_state['past'][i], is_user=True, key=str(i) + '_user', avatar_style="fun-emoji")
+        message(st.session_state['past'][i], is_user=True, key=str(i) + '_user', avatar_style="adventurer")
 

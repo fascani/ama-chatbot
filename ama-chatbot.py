@@ -343,47 +343,84 @@ def ama_chatbot(query, df, method):
 # Streamlit app
 ###############
 
-# (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
+# from https://docs.streamlit.io/knowledge-base/deploy/authentication-without-sso#option-2-individual-password-for-each-user
+def check_password():
+    """Returns `True` if the user had a correct password."""
 
-st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
-st.title('Ask Me Anything!')
-st.subheader('A chatbot by and about Francois Ascani')
-st.markdown('Aloha! Here is a chatbot I built for you to ask questions about my professional journey. Like any other chatbot, \nit might hallucinate but \
-I kept its "freedom of speech" (aka temperature) pretty low so, hopefully, it does not hallucinate too much \U0001f600. If in doubt, check my CV. Have fun!')
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if (
+            st.session_state["username"] in st.secrets["passwords"]
+            and st.session_state["password"]
+            == st.secrets["passwords"][st.session_state["username"]]
+        ):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # don't store username + password
+            del st.session_state["username"]
+        else:
+            st.session_state["password_correct"] = False
 
-# Prepare engine
-method = 'openai'
-df = get_data()
+    if "password_correct" not in st.session_state:
+        # First run, show inputs for username + password.
+        st.text_input("Username", on_change=password_entered, key="username")
+        st.text_input(
+            "Password", type="password", on_change=password_entered, key="password"
+        )
+        return False
+    elif not st.session_state["password_correct"]:
+        # Password not correct, show input + error.
+        st.text_input("Username", on_change=password_entered, key="username")
+        st.text_input(
+            "Password", type="password", on_change=password_entered, key="password"
+        )
+        st.error("😕 User not known or password incorrect")
+        return False
+    else:
+        # Password correct.
+        return True
 
-# Storing the chat
-if 'generated' not in st.session_state:
-    st.session_state['generated'] = []
+if check_password():
 
-if 'past' not in st.session_state:
-    st.session_state['past'] = []
-    
-# Get user's input
-hello_message = "Hello, how are you?"
-def get_text(hello_message):
-    input_text = st.text_input("You: ", hello_message, key="input")
-    return input_text
+    # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
+    st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
+    st.title('Ask Me Anything!')
+    st.subheader('A chatbot by and about Francois Ascani')
+    st.markdown('Aloha! Here is a chatbot I built for you to ask questions about my professional journey. Like any other chatbot, \nit might hallucinate but \
+    I kept its "freedom of speech" (aka temperature) pretty low so, hopefully, it does not hallucinate too much \U0001f600. If in doubt, check my CV. Have fun!')
 
-user_input = get_text(hello_message)
+    # Prepare engine
+    method = 'openai'
+    df = get_data()
 
-# Get the answer
-if user_input:
-    answer, prompt = ama_chatbot(user_input, df, method)
-    # Store the output 
-    st.session_state.past.append(user_input)
-    st.session_state.generated.append(answer)
-    # Record the interaction if not the hello message
-    if user_input != hello_message:
-        record_question_answer(user_input, answer)
-    
-# Display the chat    
-if st.session_state['generated']:
-    
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        message(st.session_state["generated"][i], key=str(i), avatar_style="bottts")
-        message(st.session_state['past'][i], is_user=True, key=str(i) + '_user', avatar_style='human')
+    # Storing the chat
+    if 'generated' not in st.session_state:
+        st.session_state['generated'] = []
+
+    if 'past' not in st.session_state:
+        st.session_state['past'] = []
+
+    # Get user's input
+    hello_message = "Hello, how are you?"
+    def get_text(hello_message):
+        input_text = st.text_input("You: ", hello_message, key="input")
+        return input_text
+
+    user_input = get_text(hello_message)
+
+    # Get the answer
+    if user_input:
+        answer, prompt = ama_chatbot(user_input, df, method)
+        # Store the output 
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(answer)
+        # Record the interaction if not the hello message
+        if user_input != hello_message:
+            record_question_answer(user_input, answer)
+
+    # Display the chat    
+    if st.session_state['generated']:
+
+        for i in range(len(st.session_state['generated'])-1, -1, -1):
+            message(st.session_state["generated"][i], key=str(i), avatar_style="bottts")
+            message(st.session_state['past'][i], is_user=True, key=str(i) + '_user', avatar_style='human')
 

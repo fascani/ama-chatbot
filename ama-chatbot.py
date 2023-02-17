@@ -328,7 +328,7 @@ def ama_chatbot(query, df, method):
 
     response = openai.Completion.create(
         prompt=prompt,
-        temperature=0.9,
+        temperature=0.1,
         max_tokens=300,
         top_p=1,
         frequency_penalty=0,
@@ -347,6 +347,8 @@ def ama_chatbot(query, df, method):
 
 st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
 st.title('Ask Me Anything! A chatbot by and about Francois Ascani')
+st.text('Aloha! Here is a chatbot I built for you to ask questions about my professional journey. Like any other chatbot, \nit might hallucinate but \
+I kept its "freedom of speech" (aka temperature) pretty low so, hopefully, it does not hallucinate too much. If in doubt, check my CV. Enjoy!')
 
 # Prepare engine
 method = 'openai'
@@ -369,9 +371,11 @@ user_input = get_text()
 # Get the answer
 if user_input:
     answer, prompt = ama_chatbot(user_input, df, method)
-    # store the output 
+    # Store the output 
     st.session_state.past.append(user_input)
     st.session_state.generated.append(answer)
+    # Record the interaction
+    record_question_answer(user_input, answer)
     
 # Display the chat    
 if st.session_state['generated']:

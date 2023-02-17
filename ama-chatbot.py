@@ -362,9 +362,9 @@ if 'generated' not in st.session_state:
 if 'past' not in st.session_state:
     st.session_state['past'] = []
     
-# Get user's input   
-def get_text():
-    hello_message = "Hello, how are you?"
+# Get user's input
+hello_message = "Hello, how are you?"
+def get_text(hello_message):
     input_text = st.text_input("You: ", hello_message, key="input")
     return input_text
 

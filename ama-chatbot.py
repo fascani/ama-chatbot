@@ -367,10 +367,10 @@ user_input = get_text()
 
 # Get the answer
 if user_input:
-    output = ama_chatbot(user_input, df, method)
+    answer, prompt = ama_chatbot(user_input, df, method)
     # store the output 
     st.session_state.past.append(user_input)
-    st.session_state.generated.append(output)
+    st.session_state.generated.append(answer)
     
 # Display the chat    
 if st.session_state['generated']:

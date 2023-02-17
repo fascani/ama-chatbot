@@ -43,6 +43,7 @@ def parse_numbers(s):
     else:
         return ''
 
+@st.cache_data
 def get_data():
     '''
     Read the biographical information from the Google sheet
@@ -349,7 +350,6 @@ st.title('Ask Me Anything! A chatbot by and about Francois Ascani')
 
 # Prepare engine
 method = 'openai'
-@st.cache_data
 df = get_data()
 
 # Storing the chat

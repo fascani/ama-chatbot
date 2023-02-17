@@ -368,7 +368,7 @@ def get_text(hello_message):
     input_text = st.text_input("You: ", hello_message, key="input")
     return input_text
 
-user_input = get_text()
+user_input = get_text(hello_message)
 
 # Get the answer
 if user_input:

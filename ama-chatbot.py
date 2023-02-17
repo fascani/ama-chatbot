@@ -7,11 +7,11 @@ Created on Tue Feb 14 19:36:38 2023
 """
 
 import os
-import gspread
 import streamlit as st
 import pandas as pd
 #from oauth2client.service_account import ServiceAccountCredentials
 from google.oauth2 import service_account
+import gspread
 import openai
 import numpy as np
 from transformers import GPT2TokenizerFast
@@ -28,12 +28,11 @@ def access_sheet(sheet_name):
     See https://docs.streamlit.io/knowledge-base/tutorials/databases/private-gsheet
     '''
     # From local computer
-    #scopes = ['https://spreadsheets.google.com/feeds',
-    #         'https://www.googleapis.com/auth/drive']
+    scope = ['https://spreadsheets.google.com/feeds',
+             'https://www.googleapis.com/auth/drive']
     #credentials = ServiceAccountCredentials.from_json_keyfile_name('ama-chatbot-8515b4750179.json', scope)
-    # From streamlit
-    credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"],
-                                                                        scopes=["https://www.googleapis.com/auth/spreadsheets",])
+    credentials = service_account.Credentials.from_service_account_info(
+                st.secrets["gcp_service_account"], scopes = scope)
     gc = gspread.authorize(credentials)
     sheet = gc.open('ama-chatbot-db').worksheet(sheet_name)
     return sheet

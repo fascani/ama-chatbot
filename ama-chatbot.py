@@ -349,6 +349,7 @@ st.title('Ask Me Anything! A chatbot by and about Francois Ascani')
 
 # Prepare engine
 method = 'openai'
+@st.cache_data
 df = get_data()
 
 # Storing the chat

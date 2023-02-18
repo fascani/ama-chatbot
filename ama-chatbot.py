@@ -384,7 +384,7 @@ def check_password():
 
 if check_password():
     
-    if 'kept_username' not in st.session_state.keys:
+    if 'kept_username' not in st.session_state:
         st.session_state['kept_username'] = st.session_state['username']
 
     # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)

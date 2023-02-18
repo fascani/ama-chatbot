@@ -378,6 +378,7 @@ def check_password():
         return False
     else:
         # Password correct.
+        print(st.session_state["username"])
         return True
 
 if check_password():

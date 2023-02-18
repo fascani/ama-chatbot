@@ -383,6 +383,8 @@ def check_password():
         return True
 
 if check_password():
+    
+    username = st.session_state['username']
 
     # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
     st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")

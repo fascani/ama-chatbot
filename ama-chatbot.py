@@ -162,7 +162,7 @@ def update_data(method):
 ###########################################################################
 def vector_similarity(x, y):
     '''
-    Calculate the cosine similarity between two vectors.
+    Calculate the dot product between two vectors.
 
     Parameters
     ----------
@@ -172,7 +172,7 @@ def vector_similarity(x, y):
     Returns
     -------
     Float
-        Cosine similarity (number between 0 and 1).
+        Dot product
 
     '''
     return np.dot(np.array(x), np.array(y))

@@ -276,7 +276,7 @@ def construct_prompt(query, df, method):
     
     return prompt
 
-def record_question_answer(query, answer):
+def record_question_answer(user, query, answer):
     '''
     Record the query, prompt and answer in the database
     '''
@@ -286,9 +286,10 @@ def record_question_answer(query, answer):
     df = pd.DataFrame(data[1:], columns=['date', 'query', 'answer'])
     num_records = len(df)
     today_str = datetime.datetime.strftime(datetime.datetime.today(), '%Y-%m-%d')
-    sheet.update_cell(num_records+2, 1, today_str)
-    sheet.update_cell(num_records+2, 2, query)
-    sheet.update_cell(num_records+2, 3, answer)
+    sheet.update_cell(num_records+2, 2, user)
+    sheet.update_cell(num_records+2, 2, today_str)
+    sheet.update_cell(num_records+2, 3, query)
+    sheet.update_cell(num_records+2, 4, answer)
     
 def ama_chatbot(query, df, method):
     '''
@@ -356,7 +357,7 @@ def check_password():
         ):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # don't store username + password
-            del st.session_state["username"]
+            #del st.session_state["username"]
         else:
             st.session_state["password_correct"] = False
 
@@ -381,6 +382,9 @@ def check_password():
 
 if check_password():
 
+    # Get the user
+    user = st.session_state["username"]
+    
     # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
     st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
     st.title('Ask Me Anything!')
@@ -415,7 +419,7 @@ if check_password():
         st.session_state.generated.append(answer)
         # Record the interaction if not the hello message
         if user_input != hello_message:
-            record_question_answer(user_input, answer)
+            record_question_answer(user, user_input, answer)
 
     # Display the chat    
     if st.session_state['generated']:

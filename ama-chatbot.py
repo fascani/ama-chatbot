@@ -350,8 +350,9 @@ def ama_chatbot(query, df, method):
 def check_password():
     """Returns `True` if the user had a correct password."""
 
-    global username
-    
+    if 'username' not in st.session_state:
+        st.session_state["username"] = 'user2'
+        
     def password_entered():
         """Checks whether a password entered by the user is correct."""
         if (
@@ -361,7 +362,6 @@ def check_password():
         ):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # don't store username + password
-            username = st.session_state["username"]
             #del st.session_state["username"]
         else:
             st.session_state["password_correct"] = False
@@ -386,7 +386,7 @@ def check_password():
         return True
 
 if check_password():
-   
+
     # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
     st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
     st.title('Ask Me Anything!')
@@ -421,7 +421,7 @@ if check_password():
         st.session_state.generated.append(answer)
         # Record the interaction if not the hello message
         if user_input != hello_message:
-            record_question_answer(username, user_input, answer)
+            record_question_answer(st.session_state["username"], user_input, answer)
 
     # Display the chat    
     if st.session_state['generated']:

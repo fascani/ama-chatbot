@@ -395,10 +395,10 @@ if check_password():
     method = 'openai'
     df = get_data()
     
-    def clear_text():
-        st.session_state["input"] = ""
+    #def clear_text():
+    #    st.session_state["input"] = ""
     
-    st.button("clear question", on_click=clear_text)
+    #st.button("clear question", on_click=clear_text)
 
     # Storing the chat
     if 'generated' not in st.session_state:

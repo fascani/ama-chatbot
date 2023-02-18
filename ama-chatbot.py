@@ -364,13 +364,15 @@ def check_password():
     if "password_correct" not in st.session_state:
         # First run, show inputs for username + password.
         username = st.text_input("Username", on_change=password_entered, key="username")
+        print(username)
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
         return False
     elif not st.session_state["password_correct"]:
         # Password not correct, show input + error.
-        username = st.text_input("Username", on_change=password_entered, key="username")
+        username = username = st.text_input("Username", on_change=password_entered, key="username")
+        print(username)
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
@@ -378,13 +380,10 @@ def check_password():
         return False
     else:
         # Password correct.
-        st.session_state["username"] = username
         return True
 
 if check_password():
    
-    username = st.session_state["username"]
-
     # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
     st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
     st.title('Ask Me Anything!')
@@ -419,7 +418,7 @@ if check_password():
         st.session_state.generated.append(answer)
         # Record the interaction if not the hello message
         if user_input != hello_message:
-            record_question_answer(username, user_input, answer)
+            record_question_answer('user', user_input, answer)
 
     # Display the chat    
     if st.session_state['generated']:

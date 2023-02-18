@@ -344,12 +344,14 @@ def ama_chatbot(query, df, method):
 # Streamlit app
 ###############
 
-username = 'user'
+#username = 'user'
 
 # from https://docs.streamlit.io/knowledge-base/deploy/authentication-without-sso#option-2-individual-password-for-each-user
 def check_password():
     """Returns `True` if the user had a correct password."""
 
+    global username
+    
     def password_entered():
         """Checks whether a password entered by the user is correct."""
         if (
@@ -359,6 +361,7 @@ def check_password():
         ):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # don't store username + password
+            username = st.session_state["username"]
             #del st.session_state["username"]
         else:
             st.session_state["password_correct"] = False
@@ -366,7 +369,6 @@ def check_password():
     if "password_correct" not in st.session_state:
         # First run, show inputs for username + password.
         st.text_input("Username", on_change=password_entered, key="username")
-        username = st.session_state["username"]
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
@@ -374,7 +376,6 @@ def check_password():
     elif not st.session_state["password_correct"]:
         # Password not correct, show input + error.
         username = username = st.text_input("Username", on_change=password_entered, key="username")
-        username = st.session_state["username"]
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )

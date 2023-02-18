@@ -344,15 +344,12 @@ def ama_chatbot(query, df, method):
 # Streamlit app
 ###############
 
-#username = 'user'
+username = 'user'
 
 # from https://docs.streamlit.io/knowledge-base/deploy/authentication-without-sso#option-2-individual-password-for-each-user
 def check_password():
     """Returns `True` if the user had a correct password."""
 
-    if 'username' not in st.session_state:
-        st.session_state["username"] = 'user2'
-        
     def password_entered():
         """Checks whether a password entered by the user is correct."""
         if (
@@ -375,7 +372,7 @@ def check_password():
         return False
     elif not st.session_state["password_correct"]:
         # Password not correct, show input + error.
-        username = username = st.text_input("Username", on_change=password_entered, key="username")
+        st.text_input("Username", on_change=password_entered, key="username")
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
@@ -408,7 +405,7 @@ if check_password():
     # Get user's input
     hello_message = "Hello, how are you?"
     def get_text(hello_message):
-        input_text = st.text_input("You: ", hello_message, key="input")
+        input_text = st.text_input("You: ", hello_message, key="input", clear_on_submit = True)
         return input_text
 
     user_input = get_text(hello_message)
@@ -421,7 +418,7 @@ if check_password():
         st.session_state.generated.append(answer)
         # Record the interaction if not the hello message
         if user_input != hello_message:
-            record_question_answer(st.session_state["username"], user_input, answer)
+            record_question_answer(username, user_input, answer)
 
     # Display the chat    
     if st.session_state['generated']:

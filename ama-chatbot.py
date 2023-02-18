@@ -420,7 +420,7 @@ if check_password():
         st.session_state.generated.append(answer)
         # Record the interaction if not the hello message
         if user_input != hello_message:
-            record_question_answer('user', user_input, answer)
+            record_question_answer(username, user_input, answer)
 
     # Display the chat    
     if st.session_state['generated']:

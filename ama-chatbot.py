@@ -356,7 +356,7 @@ def check_password():
             == st.secrets["passwords"][st.session_state["username"]]
         ):
             st.session_state["password_correct"] = True
-            del st.session_state["password"]  # don't store username + password
+            #del st.session_state["password"]  # don't store username + password
             #del st.session_state["username"]
         else:
             st.session_state["password_correct"] = False

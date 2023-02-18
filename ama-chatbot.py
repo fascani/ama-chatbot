@@ -363,14 +363,14 @@ def check_password():
 
     if "password_correct" not in st.session_state:
         # First run, show inputs for username + password.
-        st.text_input("Username", on_change=password_entered, key="username")
+        username = st.text_input("Username", on_change=password_entered, key="username")
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
         return False
     elif not st.session_state["password_correct"]:
         # Password not correct, show input + error.
-        st.text_input("Username", on_change=password_entered, key="username")
+        username = st.text_input("Username", on_change=password_entered, key="username")
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
@@ -378,7 +378,7 @@ def check_password():
         return False
     else:
         # Password correct.
-        print(st.session_state["username"])
+        st.session_state["username"] = username
         return True
 
 if check_password():

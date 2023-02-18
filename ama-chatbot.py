@@ -394,6 +394,11 @@ if check_password():
     # Prepare engine
     method = 'openai'
     df = get_data()
+    
+    def clear_text():
+        st.session_state["input"] = ""
+    
+    st.button("clear question", on_click=clear_text)
 
     # Storing the chat
     if 'generated' not in st.session_state:
@@ -405,7 +410,7 @@ if check_password():
     # Get user's input
     hello_message = "Hello, how are you?"
     def get_text(hello_message):
-        input_text = st.text_input("You: ", hello_message, key="input", clear_on_submit = True)
+        input_text = st.text_input("You: ", hello_message, key="input")
         return input_text
 
     user_input = get_text(hello_message)

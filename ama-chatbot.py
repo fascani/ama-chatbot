@@ -389,7 +389,7 @@ if check_password():
 
     # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
     st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
-    st.title('Ask Me Anything!' + st.session_state['kept_username'])
+    st.title('Ask Me Anything!')
     st.subheader('A chatbot by and about Francois Ascani')
     st.markdown('Aloha! Here is a chatbot I built for you to ask questions about my professional journey. Like any other chatbot, \nit might hallucinate but \
     I kept its "freedom of speech" (aka temperature) pretty low so, hopefully, it does not hallucinate too much \U0001f600. If in doubt, check my CV. Have fun!')

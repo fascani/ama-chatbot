@@ -286,7 +286,7 @@ def record_question_answer(user, query, answer):
     df = pd.DataFrame(data[1:], columns=['date', 'query', 'answer'])
     num_records = len(df)
     today_str = datetime.datetime.strftime(datetime.datetime.today(), '%Y-%m-%d')
-    sheet.update_cell(num_records+2, 2, user)
+    sheet.update_cell(num_records+2, 1, user)
     sheet.update_cell(num_records+2, 2, today_str)
     sheet.update_cell(num_records+2, 3, query)
     sheet.update_cell(num_records+2, 4, answer)

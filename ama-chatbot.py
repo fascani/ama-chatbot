@@ -283,7 +283,7 @@ def record_question_answer(user, query, answer):
     sheet = access_sheet('Q&A')
     # Read how many records we have
     data = sheet.get_all_values()
-    df = pd.DataFrame(data[1:], columns=['date', 'query', 'answer'])
+    df = pd.DataFrame(data[1:], columns=['user', 'date', 'query', 'answer'])
     num_records = len(df)
     today_str = datetime.datetime.strftime(datetime.datetime.today(), '%Y-%m-%d')
     sheet.update_cell(num_records+2, 1, user)

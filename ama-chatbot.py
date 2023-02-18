@@ -349,6 +349,7 @@ def check_password():
     """Returns `True` if the user had a correct password."""
 
     def password_entered():
+        global user
         """Checks whether a password entered by the user is correct."""
         if (
             st.session_state["username"] in st.secrets["passwords"]
@@ -356,8 +357,9 @@ def check_password():
             == st.secrets["passwords"][st.session_state["username"]]
         ):
             st.session_state["password_correct"] = True
-            #del st.session_state["password"]  # don't store username + password
-            #del st.session_state["username"]
+            del st.session_state["password"]  # don't store username + password
+            user = st.session_state["username"]
+            del st.session_state["username"]
         else:
             st.session_state["password_correct"] = False
 
@@ -382,9 +384,6 @@ def check_password():
 
 if check_password():
 
-    # Get the user
-    user = st.session_state["username"]
-    
     # (adapted from https://medium.com/@avra42/build-your-own-chatbot-with-openai-gpt-3-and-streamlit-6f1330876846)
     st.set_page_config(page_title="Ask Me Anything (AMA), Francois Ascani's chatbot")
     st.title('Ask Me Anything!')

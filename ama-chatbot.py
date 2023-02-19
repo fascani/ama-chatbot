@@ -84,6 +84,7 @@ def record_embeddings(df):
 # Set the OpenAI API key
 openai.api_key = st.secrets["openai_api_key"]
 
+@st.cache_data
 def get_embeddings(text, method):
     '''
     Calculate embeddings.
@@ -117,6 +118,7 @@ def get_embeddings(text, method):
     
     return embedding
 
+@st.cache_data
 def add_embeddings(df, method):
     '''
     Calculate embeddings and number of tokens of the combined section+content. 
@@ -214,6 +216,7 @@ def order_entries_by_similarity(query, df, method):
 # Set the tokenizer
 tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
 
+@st.cache_data
 def get_max_num_tokens():
     '''
     Max number of tokens a pre-trained NLP model can take.
@@ -426,7 +429,7 @@ if check_password():
         answer, prompt = ama_chatbot(user_input, df, method)
         # Store the output 
         st.session_state.past.append(user_input)
-        st.session_state.generated.append(prompt[251:351])
+        st.session_state.generated.append(answer)
         # Record the interaction if not the hello message
         if user_input != hello_message:
             record_question_answer(st.session_state['kept_username'], user_input, answer)

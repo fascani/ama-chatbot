@@ -172,6 +172,7 @@ if check_password():
 
         return embedding
 
+    @st.cache_data
     def add_embeddings(df, method):
         '''
         Calculate embeddings and number of tokens of the combined section+content. 

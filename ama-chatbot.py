@@ -74,7 +74,6 @@ if check_password():
     
     # Read database on Google sheet
     ###############################
-    @st.cache_data
     def access_sheet(sheet_name):
         '''
         Access the Google's spreadsheet. 
@@ -138,7 +137,6 @@ if check_password():
     # Set the OpenAI API key
     openai.api_key = st.secrets["openai_api_key"]
 
-    @st.cache_data
     def get_embeddings(text, method):
         '''
         Calculate embeddings.
@@ -172,7 +170,6 @@ if check_password():
 
         return embedding
 
-    @st.cache_data
     def add_embeddings(df, method):
         '''
         Calculate embeddings and number of tokens of the combined section+content. 
@@ -270,7 +267,6 @@ if check_password():
     # Set the tokenizer
     tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
 
-    @st.cache_data
     def get_max_num_tokens():
         '''
         Max number of tokens a pre-trained NLP model can take.
@@ -402,13 +398,6 @@ if check_password():
     method = 'openai'
     df = get_data()    
     
-    st.markdown(f'Number of entries: 29')
-    
-    #def clear_text():
-    #    st.session_state["input"] = ""
-    
-    #st.button("clear question", on_click=clear_text)
-
     # Storing the chat
     if 'generated' not in st.session_state:
         st.session_state['generated'] = []

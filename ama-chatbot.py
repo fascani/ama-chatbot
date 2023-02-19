@@ -329,7 +329,7 @@ def ama_chatbot(query, df, method):
 
     response = openai.Completion.create(
         prompt=prompt,
-        temperature=0.1,
+        temperature=0.9,
         max_tokens=300,
         top_p=1,
         frequency_penalty=0,

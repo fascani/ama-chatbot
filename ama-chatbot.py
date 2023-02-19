@@ -399,6 +399,8 @@ if check_password():
     method = 'openai'
     df = get_data()    
     
+    st.markdown(f'Number of entries: 29')
+    
     #def clear_text():
     #    st.session_state["input"] = ""
     

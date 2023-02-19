@@ -74,6 +74,7 @@ if check_password():
     
     # Read database on Google sheet
     ###############################
+    @st.cache_resource
     def access_sheet(sheet_name):
         '''
         Access the Google's spreadsheet. 
@@ -120,6 +121,7 @@ if check_password():
     # This function should be run only when a new entry is
     # made in the database
     #####################################################
+    @st.cache_data
     def record_embeddings(df):
         '''
         Write the embeddings and number of tokens of each entry in the Google
@@ -265,7 +267,9 @@ if check_password():
     ######################
 
     # Set the tokenizer
-    tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
+    @st.cache_resource
+    def load_tokenizer():
+        return GPT2TokenizerFast.from_pretrained("gpt2")
 
     def get_max_num_tokens():
         '''
@@ -301,6 +305,7 @@ if check_password():
 
         MAX_SECTION_LEN = get_max_num_tokens()
         SEPARATOR = "\n* "
+        tokenizer = load_tokenizer()
         separator_len = len(tokenizer.tokenize(SEPARATOR))
 
         chosen_sections = []

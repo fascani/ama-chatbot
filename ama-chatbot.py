@@ -398,7 +398,7 @@ if check_password():
     st.subheader('A chatbot by and about Francois Ascani')
     st.markdown('Aloha! Here is a chatbot I built for you to ask questions about my professional journey. Like any other chatbot, \nit might hallucinate but \
     I kept its "freedom of speech" (aka temperature) pretty low so, hopefully, it does not hallucinate too much \U0001f600. If in doubt, check my CV. Have fun!')
-    st.markdown(f'Number of entries: 29')
+    #st.markdown(f'Number of entries: 29')
     
     #def clear_text():
     #    st.session_state["input"] = ""

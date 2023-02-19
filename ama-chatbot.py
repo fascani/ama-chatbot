@@ -426,7 +426,7 @@ if check_password():
         answer, prompt = ama_chatbot(user_input, df, method)
         # Store the output 
         st.session_state.past.append(user_input)
-        st.session_state.generated.append(answer)
+        st.session_state.generated.append(prompt[:100])
         # Record the interaction if not the hello message
         if user_input != hello_message:
             record_question_answer(st.session_state['kept_username'], user_input, answer)

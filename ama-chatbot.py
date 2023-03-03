@@ -117,7 +117,7 @@ if check_password():
             df[col] = df[col].apply(lambda x: int(x) if x != '' else '')
         return df
 
-    # Write database with embeddgins back to Google sheet
+    # Write database with embeddings back to Google sheet
     # This function should be run only when a new entry is
     # made in the database
     #####################################################

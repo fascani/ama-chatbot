@@ -28,6 +28,9 @@ username = 'user'
 def check_password():
     """Returns `True` if the user had a correct password."""
 
+    st.set_page_config(page_title="Hello! Welcome to Francois Ascani's chatbot")
+    st.title("Hello! Welcome to Francois Ascani's chatbot")
+    
     def password_entered():
         """Checks whether a password entered by the user is correct."""
         if (
